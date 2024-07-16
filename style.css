@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    /*border: 1px red solid;*/
+}
+
+
+.calculator {
+    width: 323px;
+    margin: 30px auto 30px auto;
+    border: 2px black solid
+}
+
+.display {
+    color: white;
+    background: black;
+    height: 90px;
+    text-align: right;
+}
+.result {
+    padding: 30px 15px ;
+    font-size: 32px;
+}
+
+.teclado {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas:
+        "del operator"
+        "num operator"
+        "zero operator";
+}
+
+.teclado .num {
+    grid-area: num;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 226px;
+}
+
+.operator {
+    grid-area: operator;
+    display: flex;
+    flex-direction: column;
+}
+
+.operator button {
+    background: #DF974C;
+    color: white;
+}
+.operator button:hover {
+    background: #dfb07e;
+}
+
+#zero {
+    width: auto;
+    grid-area: zero;
+    padding:0;
+}
+
+.teclado .del-operator {
+    grid-area: del;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+
+}
+.teclado .del-operator .clear {
+    width: auto;
+}
+
+button {
+    width: 80px;
+    height: 75px;
+    font-size: 20px;
+    border-radius: 0;
+    border: 1px black solid;
+    background: #D8D9DB;
+
+}
+button:hover {
+    background: white;
+}
+
+.backspace {
+    font-size: 32px;
+    padding-bottom: 10px;
+}
+
