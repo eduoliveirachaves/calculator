@@ -1,35 +1,47 @@
 let result = 0;
+let firstOperation = true;
 let operation = "";
 const d = document.querySelector(".result");
-let displayNum = d.innerText;
-
+let isResult = false;
 
 function sum(input) {
     let i = parseInt(input);
     result += i;
 }
 
-
 function multiply(input) {
-    result *= input;
-    return result;
+    let i = parseInt(input);
+    if (firstOperation) {
+        result = input;
+        return;
+    }
+    result *= i;
 }
 
 function minus(input) {
-    result -= input;
-    return result;
+    let i = parseInt(input);
+    if (firstOperation) {
+        result = input;
+        return;
+    }
+    result -= i;
 }
 
 function divisor(input) {
-    result /= input;
-    return result;
+    let i = parseInt(input);
+    if (firstOperation) {
+        result = input;
+        return;
+    }
+    result /= i;
 }
 
 function clear() {
-    result = 0;
     let clear = document.querySelector(".clear");
     clear.addEventListener("click", function () {
         d.innerText = "0";
+        result = 0;
+        firstOperation = true;
     });
 }
 
@@ -55,43 +67,57 @@ function teclado() {
 
 function displayIsClear() {
     let displayNum = document.querySelector(".result");
-    return displayNum.innerText === '0';
+    return displayNum.innerText === "0";
 }
 
 function doOperations() {
     let operators = document.querySelector(".operator");
-
     operators.addEventListener("click", function (op) {
 
+        if (isResult) {
+            operation = op.target.innerText;
+            isResult = false;
+            d.innerText = "0";
+            return;
+        }
+
+        //1
+        let input = parseInt(d.innerText);
+
+        //2
         if (!(op.target.innerText === "=")) {
             operation = op.target.innerText;
         }
 
+        //3
         if (op.target.innerText === "=") {
-            whichOperator(operation)
+            makeOperation(operation, input);
             d.innerText = result;
+            operation = null;
+            isResult = true;
         } else {
-            whichOperator(operation);
+            makeOperation(operation, input);
             d.innerText = "0";
         }
 
-    });
+        firstOperation = false;
 
+    });
 }
 
-function whichOperator(operator) {
+function makeOperation(operator, input) {
     if (operator === "+") {
-        sum(d.innerText);
+        sum(input);
     } else if (operator === "-") {
-        minus(displayNum);
+        minus(input);
     } else if (operator === "x") {
-        multiply(displayNum);
+        multiply(input);
     } else if (operator === "&#247;") {
-        divisor(displayNum);
+        divisor(input);
     }
 }
 
 teclado();
 zero();
+doOperations();
 clear();
-doOperations(false);
