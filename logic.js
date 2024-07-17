@@ -1,56 +1,15 @@
 let result = 0;
-let firstOperation = true;
+let firstInput = true;
 let operation = "";
 const d = document.querySelector(".result");
 let isResult = false;
-
-function sum(input) {
-    let i = parseInt(input);
-    result += i;
-}
-
-function multiply(input) {
-    let i = parseInt(input);
-    if (firstOperation) {
-        result = input;
-        return;
-    }
-    result *= i;
-}
-
-function minus(input) {
-    let i = parseInt(input);
-    if (firstOperation) {
-        result = input;
-        return;
-    }
-    result -= i;
-}
-
-function divisor(input) {
-    let i = parseInt(input);
-    if (firstOperation) {
-        result = input;
-        return;
-    }
-    result /= i;
-}
 
 function clear() {
     let clear = document.querySelector(".clear");
     clear.addEventListener("click", function () {
         d.innerText = "0";
         result = 0;
-        firstOperation = true;
-    });
-}
-
-function zero() {
-    let zero = document.querySelector("#zero");
-    zero.addEventListener("click", function () {
-        if (!displayIsClear()) {
-            d.innerText = d.innerText + "0"
-        }
+        firstInput = true;
     });
 }
 
@@ -63,6 +22,13 @@ function teclado() {
         }
         d.innerText = d.innerText + num.target.innerText;
     });
+
+    let zero = document.querySelector("#zero");
+    zero.addEventListener("click", function () {
+        if (!displayIsClear()) {
+            d.innerText = d.innerText + "0"
+        }
+    });
 }
 
 function displayIsClear() {
@@ -74,50 +40,64 @@ function doOperations() {
     let operators = document.querySelector(".operator");
     operators.addEventListener("click", function (op) {
 
-        if (isResult) {
+        //1
+        let input = parseInt(d.innerText);
+        console.log("THIS IS THE INPUT " + input);
+
+        if (firstInput) {
+            console.log("I AM IN THE FIRST OPERATION")
+            result = input;
+            console.log("RESULTADO: " + result);
+            d.innerText = "0";
             operation = op.target.innerText;
+            firstInput = false;
+            return;
+
+        }
+        console.log("I AM NOR IN FIRST OPERATION SECTION");
+
+        if (isResult) {
+            console.log("IN IS RESULT SECTION 1");
             isResult = false;
             d.innerText = "0";
+            console.log("RESULTADO: " + result);
+            operation = op.target.innerText;
             return;
         }
 
-        //1
-        let input = parseInt(d.innerText);
-
-        //2
-        if (!(op.target.innerText === "=")) {
-            operation = op.target.innerText;
-        }
-
-        //3
         if (op.target.innerText === "=") {
+            console.log("IN IS RESULT SECTION 2");
             makeOperation(operation, input);
+            console.log("RESULTADO: " + result);
             d.innerText = result;
             operation = null;
             isResult = true;
         } else {
             makeOperation(operation, input);
+            console.log("RESULTADO: " + result);
             d.innerText = "0";
         }
 
-        firstOperation = false;
+        if (!(op.target.innerText === "=")) {
+            operation = op.target.innerText;
+            console.log("THIS IS THE OPERATION " + operation);
+        }
 
     });
 }
 
 function makeOperation(operator, input) {
     if (operator === "+") {
-        sum(input);
+        result += input;
     } else if (operator === "-") {
-        minus(input);
+        result -= input;
     } else if (operator === "x") {
-        multiply(input);
-    } else if (operator === "&#247;") {
-        divisor(input);
+        result *= input;
+    } else if (operator === "÷") {
+        result /= input;
     }
 }
 
 teclado();
-zero();
 doOperations();
 clear();
