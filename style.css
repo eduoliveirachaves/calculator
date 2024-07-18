@@ -1,7 +1,6 @@
 * {
     box-sizing: border-box;
     margin: 0;
-    /*border: 1px red solid;*/
 }
 
 
@@ -27,15 +26,13 @@
     grid-template-columns: 3fr 1fr;
     grid-template-areas:
         "del operator"
-        "num operator"
-        "zero operator";
+        "num operator";
 }
 
 .teclado .num {
     grid-area: num;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 226px;
 }
 
 .operator {
@@ -52,10 +49,9 @@
     background: #dfb07e;
 }
 
-#zero {
+.num button:last-child {
     width: auto;
-    grid-area: zero;
-    padding:0;
+    grid-column: span 3;
 }
 
 .teclado .del-operator {
@@ -64,6 +60,7 @@
     grid-template-columns: 2fr 1fr;
 
 }
+
 .teclado .del-operator .clear {
     width: auto;
 }
@@ -75,8 +72,8 @@ button {
     border-radius: 0;
     border: 1px black solid;
     background: #D8D9DB;
-
 }
+
 button:hover {
     background: white;
 }
